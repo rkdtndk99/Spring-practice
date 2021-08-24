@@ -14,28 +14,35 @@ import javax.sql.DataSource;
 public class SpringConfig {
 
 //    private final DataSource dataSource;
-    private EntityManager em;
-
-    @Autowired
-    public SpringConfig(EntityManager em){
-        this.em = em;
-    }
-
+//    private EntityManager em;
+//
+//    @Autowired
+//    public SpringConfig(EntityManager em){
+//        this.em = em;
+//    }
+//
 //    @Autowired
 //    public SpringConfig(DataSource dataSource){
 //        this.dataSource = dataSource;
 //    }
 
-    @Bean
-    public MemberService memberService(){
-        return new MemberService(memberRepository());
+    private final MemberRepository memberRepository;
+
+    @Autowired
+    public SpringConfig(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
     }
 
     @Bean
-    public MemberRepository memberRepository(){
+    public MemberService memberService(){
+        return new MemberService(memberRepository);
+    }
+
+//    @Bean
+//    public MemberRepository memberRepository(){
 //        return new MemoryMemberRepository();
 //        return new JdbcMemberRepository(dataSource);
 //        return new JdbcTemplateMemberRepository(dataSource);
-        return new JpaMemberRepository(em);
-    }
+//        return new JpaMemberRepository(em);
+//    }
 }
